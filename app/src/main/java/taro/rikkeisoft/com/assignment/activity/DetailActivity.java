@@ -10,7 +10,7 @@ import taro.rikkeisoft.com.assignment.R;
  * Created by VjrutNAT on 10/25/2017.
  */
 
-public class AddActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

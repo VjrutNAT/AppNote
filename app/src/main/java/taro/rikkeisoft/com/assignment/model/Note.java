@@ -28,47 +28,23 @@ public class Note implements Serializable {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public long getCreateAlarm() {
         return createAlarm;
-    }
-
-    public void setCreateAlarm(long createAlarm) {
-        this.createAlarm = createAlarm;
     }
 
     public long getNotifyAlarm() {
         return notifyAlarm;
     }
 
-    public void setNotifyAlarm(long notifyAlarm) {
-        this.notifyAlarm = notifyAlarm;
-    }
-
     public int getColor() {
         return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
     }
 }

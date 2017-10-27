@@ -20,8 +20,8 @@
     </style>
 
     <style name="MyActionButtonStyle" parent="Widget.AppCompat.ActionButton">
-        <item name="android:layout_weight">30dp</item>
-        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_weight">@dimen/MyActionButtonStyle</item>
+        <item name="android:layout_height">@dimen/MyActionButtonStyle</item>
     </style>
 
 </resources>
