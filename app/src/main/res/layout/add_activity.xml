@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/tv_time_current"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:padding="@dimen/padding"
+        android:textSize="@dimen/text_size_time" />
+
+    <EditText
+        android:id="@+id/edt__title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_title"
+        android:hint="@string/title"/>
+    <EditText
+        android:id="@+id/edt__note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_title"
+        android:hint="@string/note"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imv_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_alarm_black_24dp"/>
+        <TextView
+            android:id="@+id/tv_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding"
+            android:layout_toRightOf="@id/imv_alarm"
+            android:textSize="@dimen/text_size_content"
+            android:text="@string/alarm"/>
+        <LinearLayout
+            android:id="@+id/ll_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@id/imv_alarm"
+            android:visibility="gone"
+            android:weightSum="100">
+            <Spinner
+                android:id="@+id/sp_create_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="60"></Spinner>
+            <Spinner
+                android:id="@+id/sp_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="40"></Spinner>
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>
