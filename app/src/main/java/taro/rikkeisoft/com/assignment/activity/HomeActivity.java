@@ -9,10 +9,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import taro.rikkeisoft.com.assignment.R;
+import taro.rikkeisoft.com.assignment.utils.Constant;
 
 public class HomeActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,8 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_add:
-                Intent intent = new Intent(HomeActivity.this, DetailActivity.class);
+                Intent intent = new Intent(HomeActivity.this, HostActivity.class);
+                intent.putExtra(Constant.KEY_LAST_NOTE_ID, )
                 startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
