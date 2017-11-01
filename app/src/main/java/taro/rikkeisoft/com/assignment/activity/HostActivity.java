@@ -27,7 +27,7 @@ public class HostActivity extends BaseActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getDataFromIntent();
         NewNoteFragment newNoteFragment = NewNoteFragment.newInstance(itemNote, lastNoteId);
         showFragment(newNoteFragment, NewNoteFragment.TAG);
     }

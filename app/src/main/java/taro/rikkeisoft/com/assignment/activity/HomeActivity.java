@@ -53,7 +53,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initControls();
-
+        settingToolbar();
+        mNoteDAO = NoteDAO.getInstance(this);
+        registerBroadcastRefresh();
         if (Common.isMarshMallow()) {
             if (!checkPermission()) {
                 requestPermission();
@@ -86,7 +88,7 @@ public class HomeActivity extends AppCompatActivity {
                 actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher);
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setDisplayShowTitleEnabled(true);
-                actionBar.setTitle(getString(R.string.note));
+                actionBar.setTitle(getString(R.string.app_name));
             }
         }
     }

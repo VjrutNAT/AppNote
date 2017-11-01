@@ -7,7 +7,9 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,11 +17,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -63,16 +67,15 @@ public abstract class BaseFragment extends Fragment implements OnBackPressedList
     private ViewGroup root;
     private BaseActivity mActivity;
     private View mView;
-    private ImageView ivBackGroup;
+    protected ImageView ivBackGroup;
     protected RecyclerView rvImageList;
-    private EditText etTitle;
-    private EditText etContent;
+    protected EditText etTitle;
+    protected EditText etContent;
     protected TextView tvCurrentTime;
-    private TextView tvAlarm;
-    private LinearLayout llDate;
-    private Spinner spDate;
-    private Spinner spTime;
-    private ImageView btCloseDateTime;
+    protected TextView tvAlarm;
+    protected LinearLayout llDate;
+    protected AppCompatSpinner spDate, spTime;
+    protected ImageView btCloseDateTime;
     private AlertDialog alertDialogColor, alertDialogPhotos;
     protected final NoteDAO mNoteDAO = NoteDAO.getInstance(getActivity());
     protected final ImageDAO mImageDAO = ImageDAO.getInstance(getActivity());
@@ -110,6 +113,7 @@ public abstract class BaseFragment extends Fragment implements OnBackPressedList
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         root = container;
         mActivity = (BaseActivity) getActivity();
         mActivity.setOnBackPressedListener(this);
@@ -133,7 +137,7 @@ public abstract class BaseFragment extends Fragment implements OnBackPressedList
         initControls();
         initEvent();
         setUpImageList();
-        setupSpinnerDateAndTime();
+        setupSpinnerDateNSpinnerTime();
         setUpTextViewAndDateTime();
         isChanged = false;
     }
@@ -141,8 +145,8 @@ public abstract class BaseFragment extends Fragment implements OnBackPressedList
     private void initEvent() {
         tvAlarm.setOnClickListener(this);
         btCloseDateTime.setOnClickListener(this);
-        spDate.setOnClickListener(this);
-        spTime.setOnClickListener(this);
+        spDate.setOnItemSelectedListener(this);
+        spTime.setOnItemSelectedListener(this);
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -164,25 +168,30 @@ public abstract class BaseFragment extends Fragment implements OnBackPressedList
         etContent.addTextChangedListener(textWatcher);
     }
 
-    private void setupSpinnerDateAndTime() {
-        // Spinner Date
-        listDate = new ArrayList<>();
-        listDate.add(getString(R.string.today));
-        listDate.add(getString(R.string.tomorrow));
-        listDate.add(getString(R.string.next) + " " + DateTimeUtils.getCurrentDayOfWeek());
-        listDate.add(getString(R.string.other));
-        spDateAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_gallery_item, listDate);
-        spDate.setAdapter(spDateAdapter);
-
-        // Spinner Time
-        listTime = new ArrayList<>();
-        listTime.add(getString(R.string.sp_time_slot1));
-        listTime.add(getString(R.string.sp_time_slot2));
-        listTime.add(getString(R.string.sp_time_slot3));
-        listTime.add(getString(R.string.other));
-        spTimeAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_gallery_item, listTime);
-        spTimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spDate.setAdapter(spTimeAdapter);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case Constant.CAMERA_REQUEST:
+                if (data != null) {
+                    Bitmap photo = (Bitmap) data.getExtras().get("data"); //get bitmap of photo just taken
+                    String path = Common.saveImage(getActivity(), photo); //save to storage then get path
+                    listImagePath.add(path);
+                    mImageAdapter.refreshList((ArrayList<String>) listImagePath.clone());
+                    isChanged = true;
+                }
+                break;
+            case Constant.GALLERY_REQUEST:
+                if (data != null) {
+                    Uri selectedImage = data.getData(); //get uri of photo just selected
+                    String selectedImagePath = Common.getRealPathFromURI(getActivity(), selectedImage); //get path from uri
+                    Log.d("image", selectedImagePath);
+                    listImagePath.add(selectedImagePath);
+                    mImageAdapter.refreshList((ArrayList<String>) listImagePath.clone());
+                    isChanged = true;
+                }
+                break;
+        }
     }
 
     protected abstract void setUpTextViewAndDateTime();
@@ -219,10 +228,11 @@ public abstract class BaseFragment extends Fragment implements OnBackPressedList
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
             ActionBar actionBar = getActionBar();
             if (toolbar != null) {
+                actionBar.setIcon(R.mipmap.ic_launcher);
                 actionBar.setDisplayHomeAsUpEnabled(false);
                 actionBar.setDisplayShowTitleEnabled(false);
                 if (getHomeAsUpIndicator() != 0) {
-                    actionBar.setHomeActionContentDescription(getHomeAsUpIndicator());
+                    actionBar.setHomeAsUpIndicator(getHomeAsUpIndicator());
                 }
 
                 actionBar.setTitle(getActionBarName());
@@ -231,7 +241,7 @@ public abstract class BaseFragment extends Fragment implements OnBackPressedList
     }
 
     private String getActionBarName() {
-        return getActivity().getResources().getString(R.string.note);
+        return getActivity().getResources().getString(R.string.app_name);
     }
 
     protected abstract int getHomeAsUpIndicator();
@@ -530,5 +540,28 @@ public abstract class BaseFragment extends Fragment implements OnBackPressedList
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), getIdNoteToSave(),
                 intentToAlarmClass, PendingIntent.FLAG_UPDATE_CURRENT | Intent.FILL_IN_DATA);
         alarmManager.cancel(pendingIntent);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void setupSpinnerDateNSpinnerTime() {
+        //Spinner Date
+        listDate = new ArrayList<>();
+        listDate.add(getString(R.string.today));
+        listDate.add(getString(R.string.tomorrow));
+        listDate.add(getString(R.string.next) + " " + DateTimeUtils.getCurrentDayOfWeek());
+        listDate.add(getString(R.string.other));
+        spDateAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_gallery_item, listDate);
+        spDateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spDate.setAdapter(spDateAdapter);
+
+        //Spinner Time
+        listTime = new ArrayList<>();
+        listTime.add(getString(R.string.sp_time_slot1));
+        listTime.add(getString(R.string.sp_time_slot2));
+        listTime.add(getString(R.string.sp_time_slot3));
+        listTime.add(getString(R.string.other));
+        spTimeAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_gallery_item, listTime);
+        spTimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spTime.setAdapter(spTimeAdapter);
     }
 }

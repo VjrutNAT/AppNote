@@ -16,6 +16,7 @@ import taro.rikkeisoft.com.assignment.R;
 import taro.rikkeisoft.com.assignment.activity.DetailActivity;
 import taro.rikkeisoft.com.assignment.model.Note;
 import taro.rikkeisoft.com.assignment.utils.Constant;
+import taro.rikkeisoft.com.assignment.utils.DateTimeUtils;
 
 /**
  * Created by VjrutNAT on 10/25/2017.
@@ -36,8 +37,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     @Override
     public NoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = mLayoutInflater.inflate(R.layout.item_note, parent, false);
-        NoteViewHolder viewHolder = new NoteViewHolder(v);
-        return viewHolder;
+        return new NoteViewHolder(v);
     }
 
     @Override
@@ -46,7 +46,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         Note note = mNotes.get(position);
         holder.tvTitle.setText(note.getTitle());
         holder.tvContent.setText(note.getContent());
-        holder.tvTime.setText(String.valueOf(note.getCreateAlarm()));
+        holder.cvNote.setCardBackgroundColor(note.getColor());
+        holder.tvTime.setText(DateTimeUtils.getDateStrFromMilliseconds(note.getCreateAlarm(), "yyyy-MM-dd"));
+        holder.pos = holder.getAdapterPosition();
 
     }
 
