@@ -40,11 +40,6 @@ public class NewNoteFragment extends BaseFragment {
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     protected void saveNote(Note itemNoteToSave) {
         boolean result = mNoteDAO.insert(itemNoteToSave, getIdNoteToSave());
 

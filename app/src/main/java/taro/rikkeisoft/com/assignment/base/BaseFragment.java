@@ -564,4 +564,6 @@ public abstract class BaseFragment extends Fragment implements OnBackPressedList
         spTimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spTime.setAdapter(spTimeAdapter);
     }
+
+
 }
