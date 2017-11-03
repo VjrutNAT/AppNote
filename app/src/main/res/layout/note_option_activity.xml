@@ -1,123 +1,153 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_below="@+id/toolbar"
-    tools:context="">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".EditNoteFragment">
 
-    <ImageView
-        android:id="@+id/iv_background_detail"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/contentDescriptionBackGround"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="90">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        <ImageView
+            android:id="@+id/iv_background_detail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin">
+            android:layout_height="match_parent"
+            android:contentDescription="@string/contentDescriptionBackGround" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_image_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tv_current_time"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:gravity="end"
-                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:orientation="vertical"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:text="@string/today" />
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin">
 
-            <EditText
-                android:id="@+id/et_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:hint="@string/enter_title"
-                android:paddingLeft="@dimen/edt_title_content_padding_horizontal"
-                android:paddingRight="@dimen/edt_title_content_padding_horizontal"/>
-
-
-            <EditText
-                android:id="@+id/et_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:hint="@string/enter_content"
-                android:paddingLeft="@dimen/edt_title_content_padding_horizontal"
-                android:paddingRight="@dimen/edt_title_content_padding_horizontal"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/iv_alarm"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_alarm_black_24dp"
-                    android:contentDescription="@string/contentDescriptionAlarm"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_image_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <TextView
-                    android:id="@+id/tv_alarm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/iv_alarm"
-                    android:text="@string/alarm"
-                    android:textSize="@dimen/text_size_big" />
-
-                <LinearLayout
-                    android:id="@+id/ll_date_time"
+                    android:id="@+id/tv_current_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_toEndOf="@id/iv_alarm"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:gravity="end"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:text="@string/today" />
 
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/sp_choose_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical" />
+                <EditText
+                    android:id="@+id/et_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:hint="@string/enter_title"
+                    android:paddingLeft="@dimen/edt_title_content_padding_horizontal"
+                    android:paddingRight="@dimen/edt_title_content_padding_horizontal" />
 
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/sp_choose_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical" />
+
+                <EditText
+                    android:id="@+id/et_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:hint="@string/enter_content"
+                    android:paddingLeft="@dimen/edt_title_content_padding_horizontal"
+                    android:paddingRight="@dimen/edt_title_content_padding_horizontal" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/bt_close_date_time"
+                        android:id="@+id/iv_alarm"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/contentDescriptionAlarm"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_alarm_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/tv_alarm"
                         android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/iv_alarm"
+                        android:text="@string/alarm"
+                        android:textSize="@dimen/text_size_big" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_date_time"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:overScrollMode="never"
-                        android:src="@drawable/ic_close_black_24dp"
-                        android:contentDescription="@string/contentDescriptionDateTimeClose"/>
-                </LinearLayout>
-            </RelativeLayout>
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_toEndOf="@id/iv_alarm"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
-        </LinearLayout>
+                        <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/sp_choose_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical" />
 
-    </ScrollView>
+                        <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/sp_choose_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical" />
 
+                        <ImageView
+                            android:id="@+id/bt_close_date_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="@string/contentDescriptionDateTimeClose"
+                            android:overScrollMode="never"
+                            android:src="@drawable/ic_close_black_24dp" />
+                    </LinearLayout>
+                </RelativeLayout>
 
-</RelativeLayout>
+            </LinearLayout>
+
+        </ScrollView>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_share_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/bt_share_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/padding_bt"
+            android:src="@drawable/ic_share_black_24dp" />
+
+        <ImageView
+            android:id="@+id/bt_delete_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/padding_bt"
+            android:src="@drawable/ic_delete_black_24dp" />
+    </LinearLayout>
+</LinearLayout>

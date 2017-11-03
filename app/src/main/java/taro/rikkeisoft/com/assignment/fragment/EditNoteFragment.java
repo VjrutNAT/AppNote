@@ -28,23 +28,6 @@ import taro.rikkeisoft.com.assignment.utils.DateTimeUtils;
 
 public class EditNoteFragment extends BaseFragment {
 
-    private ImageView btShareNote;
-    private ImageView btDeleteNote;
-
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(getLayout(), container, false);
-
-        btDeleteNote = v.findViewById(R.id.bt_delete_note);
-        btShareNote = v.findViewById(R.id.bt_share_note);
-
-        btShareNote.setOnClickListener(this);
-        btDeleteNote.setOnClickListener(this);
-        return v;
-    }
-
     public static EditNoteFragment newInstance(Note itemNote, int lastNoteId){
         Bundle args = new Bundle();
         args.putSerializable(Constant.KEY_NOTE_DETAIL, itemNote);
@@ -57,7 +40,7 @@ public class EditNoteFragment extends BaseFragment {
 
     @Override
     protected int getLayout() {
-        return R.layout.edit_note_fragment;
+        return R.layout.note_option_activity;
     }
 
     @Override
@@ -138,50 +121,5 @@ public class EditNoteFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.bt_share_note:
-                shareNote();
-                break;
-            case R.id.bt_delete_note:
-                showConfirmDeleteNoteDialog(getIdNoteToSave());
-                break;
-        }
-    }
-
-    private void shareNote() {
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
-        String shareBody = etContent.getText().toString();
-        String shareSub = etTitle.getText().toString();
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)));
-    }
-
-    private void showConfirmDeleteNoteDialog(final int noteId) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(getString(R.string.warning));
-        builder.setMessage(getString(R.string.delete_note_question));
-        builder.setPositiveButton(getString(R.string.btn_yes), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mNoteDAO.delete(noteId);
-                Intent intent = new Intent(Constant.ACTION_REFRESH_LIST);
-                getActivity().sendBroadcast(intent);
-                dialog.dismiss();
-                cancelNotify();
-                getActivity().onBackPressed();
-            }
-        });
-        builder.setNegativeButton(getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.create().show();
-    }
 
 }

@@ -15,6 +15,8 @@ import taro.rikkeisoft.com.assignment.model.Note;
 import taro.rikkeisoft.com.assignment.utils.Constant;
 import taro.rikkeisoft.com.assignment.utils.DateTimeUtils;
 
+import static android.view.View.GONE;
+
 /**
  * A fragment extends base fragment and contains some other method for creating new note
  */
