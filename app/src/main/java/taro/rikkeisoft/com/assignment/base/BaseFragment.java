@@ -67,13 +67,13 @@ public abstract class BaseFragment extends Fragment implements OnBackPressedList
     private ViewGroup root;
     private BaseActivity mActivity;
     private View mView;
-    protected ImageView ivBackGroup, btDeleteNote, btShareNote;
+    protected ImageView ivBackGroup;
     protected RecyclerView rvImageList;
     protected EditText etTitle;
     protected EditText etContent;
     protected TextView tvCurrentTime;
     protected TextView tvAlarm;
-    protected LinearLayout llDate, llDeleteAndShare;
+    protected LinearLayout llDate;
     protected AppCompatSpinner spDate, spTime;
     protected ImageView btCloseDateTime;
     private AlertDialog alertDialogColor, alertDialogPhotos;
@@ -120,6 +120,7 @@ public abstract class BaseFragment extends Fragment implements OnBackPressedList
         return inflater.inflate(getLayout(), container, false);
     }
 
+
     protected abstract int getLayout();
 
     @Override
@@ -145,8 +146,6 @@ public abstract class BaseFragment extends Fragment implements OnBackPressedList
     private void initEvent() {
         tvAlarm.setOnClickListener(this);
         btCloseDateTime.setOnClickListener(this);
-        btDeleteNote.setOnClickListener(this);
-        btShareNote.setOnClickListener(this);
         spDate.setOnItemSelectedListener(this);
         spTime.setOnItemSelectedListener(this);
         TextWatcher textWatcher = new TextWatcher() {
@@ -209,9 +208,6 @@ public abstract class BaseFragment extends Fragment implements OnBackPressedList
         spDate = mView.findViewById(R.id.sp_choose_date);
         spTime = mView.findViewById(R.id.sp_choose_time);
         btCloseDateTime = mView.findViewById(R.id.bt_close_date_time);
-        btDeleteNote = mView.findViewById(R.id.bt_delete_note);
-        btShareNote = mView.findViewById(R.id.bt_share_note);
-        llDeleteAndShare = mView.findViewById(R.id.ll_share_delete);
     }
 
     private void setUpImageList() {
@@ -439,12 +435,6 @@ public abstract class BaseFragment extends Fragment implements OnBackPressedList
                 Common.writeLog("changed = true","change color");
                 isChanged = true;
                 break;
-            case R.id.bt_delete_note:
-                shareNote();
-                break;
-            case R.id.bt_share_note:
-                showConfirmDeleteNoteDialog(getIdNoteToSave());
-                break;
         }
     }
 
@@ -574,40 +564,6 @@ public abstract class BaseFragment extends Fragment implements OnBackPressedList
         spTimeAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_gallery_item, listTime);
         spTimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spTime.setAdapter(spTimeAdapter);
-    }
-
-    private void shareNote() {
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
-        String shareBody = etContent.getText().toString();
-        String shareSub = etTitle.getText().toString();
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)));
-    }
-
-    private void showConfirmDeleteNoteDialog(final int noteId) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(getString(R.string.warning));
-        builder.setMessage(getString(R.string.delete_note_question));
-        builder.setPositiveButton(getString(R.string.btn_yes), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mNoteDAO.delete(noteId);
-                Intent intent = new Intent(Constant.ACTION_REFRESH_LIST);
-                getActivity().sendBroadcast(intent);
-                dialog.dismiss();
-                cancelNotify();
-                getActivity().onBackPressed();
-            }
-        });
-        builder.setNegativeButton(getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.create().show();
     }
 
 }

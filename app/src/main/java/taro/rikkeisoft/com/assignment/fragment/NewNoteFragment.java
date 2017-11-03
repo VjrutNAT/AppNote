@@ -36,6 +36,7 @@ public class NewNoteFragment extends BaseFragment {
         return fragment;
     }
 
+
     @Override
     protected int getLayout() {
         return R.layout.fragment_note;

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.DetailActivity">
 
     <include layout="@layout/toolbar" android:id="@+id/toolbar"/>
@@ -11,5 +12,43 @@
         android:id="@+id/vp_note"
         android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
-</RelativeLayout>
+        android:layout_height="match_parent"
+        android:layout_weight="90"></android.support.v4.view.ViewPager>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="10"
+        android:background="@drawable/ab_background_textured_note">
+
+        <ImageView
+            android:id="@+id/bt_next_left_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_previous_item"
+            android:padding="@dimen/padding_bt"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/bt_share_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_share"
+            android:padding="@dimen/padding_bt"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/bt_delete_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_discard"
+            android:padding="@dimen/padding_bt"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/bt_next_right_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_next_item"
+            android:padding="@dimen/padding_bt"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</LinearLayout>
