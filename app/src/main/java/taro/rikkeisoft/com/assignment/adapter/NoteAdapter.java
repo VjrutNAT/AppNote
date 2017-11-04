@@ -49,7 +49,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         holder.cvNote.setCardBackgroundColor(note.getColor());
         holder.tvTime.setText(DateTimeUtils.getDateStrFromMilliseconds(note.getCreateAlarm(), "yyyy-MM-dd"));
         holder.pos = holder.getAdapterPosition();
-
+        if (note.getNotifyAlarm() > 0) {
+            holder.imvAlarm.setVisibility(View.VISIBLE);
+        }else {
+            holder.imvAlarm.setVisibility(View.GONE);
+        }
     }
 
     @Override

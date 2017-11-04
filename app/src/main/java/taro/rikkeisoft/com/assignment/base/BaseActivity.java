@@ -18,10 +18,6 @@ import taro.rikkeisoft.com.assignment.interfaces.OnBackPressedListener;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private Context mContext;
-
-    protected final NoteDAO mNoteDAO = NoteDAO.getInstance(mContext);
-
     private OnBackPressedListener mOnBackPressedListener;
 
     @Override

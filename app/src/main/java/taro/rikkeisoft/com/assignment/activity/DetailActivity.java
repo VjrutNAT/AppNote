@@ -18,6 +18,7 @@ import taro.rikkeisoft.com.assignment.R;
 import taro.rikkeisoft.com.assignment.adapter.NoteViewPagerAdapter;
 import taro.rikkeisoft.com.assignment.base.BaseActivity;
 import taro.rikkeisoft.com.assignment.base.BaseFragment;
+import taro.rikkeisoft.com.assignment.database.NoteDAO;
 import taro.rikkeisoft.com.assignment.model.Note;
 import taro.rikkeisoft.com.assignment.utils.Constant;
 
@@ -32,6 +33,7 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
     private NoteViewPagerAdapter mNoteViewPagerAdapter;
     private int notePos;
     private ImageView btDeleteNote, btShareNote, btNextLeftNote, btNextRightNote;
+    protected final NoteDAO mNoteDAO = NoteDAO.getInstance(this);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,8 +113,8 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
     private void shareNote() {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        String shareBody = mNotes.get(mNotes.size() - 1).getTitle().toString();
-        String shareSub = mNotes.get(mNotes.size() - 1).getContent().toString();
+        String shareBody = mNotes.get((int) mNotes.get(mNotes.size() - 1).getId()).getTitle().toString();
+        String shareSub = mNotes.get((int) mNotes.get(mNotes.size() - 1).getId()).getContent().toString();
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)));
@@ -148,7 +150,7 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
                 shareNote();
                 break;
             case R.id.bt_delete_note:
-                showConfirmDeleteNoteDialog(notePos);
+                showConfirmDeleteNoteDialog((int) mNotes.get(mNotes.size() - 1).getId());
                 break;
             case R.id.bt_next_left_note:
                 mNoteViewPager.setCurrentItem(notePos--);
