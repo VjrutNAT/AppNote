@@ -6,6 +6,8 @@ package taro.rikkeisoft.com.assignment.utils;
 
 public class Constant {
 
+    public static final int PERMISSION_REQUEST_CODE = 200;
+
     public static final String ACTION_REFRESH_LIST = "taro.rikkeisoft.com.assignment.ACTION_REFRESH_LIST";
     public static final String KEY_LAST_NOTE_ID = "key_last_note";
     public static final String KEY_LIST_NOTE = "key_list_note";

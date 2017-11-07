@@ -40,7 +40,7 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class HomeActivity extends AppCompatActivity {
 
-    public static final int PERMISSION_REQUEST_CODE = 200;
+
 
     private RecyclerView rvNotes;
     private ProgressBar progressBar;
@@ -123,14 +123,14 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, Constant.PERMISSION_REQUEST_CODE);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case PERMISSION_REQUEST_CODE:
+            case Constant.PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0) {
                     boolean writeAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                     boolean readAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;

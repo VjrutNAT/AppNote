@@ -47,7 +47,7 @@ public class NoteDAO implements IDAOHandle<Note, Integer> {
                 Note note = new Note(id, title, content, createDateTime, notifyDateTime, color);
                 mNotes.add(note);
             }while (result.moveToNext());
-        }
+        }result.close();
         return mNotes;
     }
 

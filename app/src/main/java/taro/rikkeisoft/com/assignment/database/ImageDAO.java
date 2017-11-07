@@ -43,7 +43,7 @@ public class ImageDAO implements IDAOHandle<String, Integer> {
                 String path = result.getString(result.getColumnIndex(NoteDataBase.TBL_IMAGE_COLUMN_PATH));
                 list.add(path);
             }while (result.moveToNext());
-        }
+        }result.close();
         return list;
     }
 
@@ -68,6 +68,6 @@ public class ImageDAO implements IDAOHandle<String, Integer> {
         boolean isSuccess;
         long result = mNoteDataBase.deletRecord(NoteDataBase.TBL_IMAGE, NoteDataBase.TBL_IMAGE_COLUMN_NOTE_ID, new String[] {String.valueOf(id)});
         isSuccess = result > 0;
-        return false;
+        return isSuccess;
     }
 }
